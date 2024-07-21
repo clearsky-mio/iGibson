@@ -88,6 +88,9 @@ class MeshRendererSettings(object):
                 self.glfw_gl_version = [4, 1]
             else:
                 self.glfw_gl_version = [4, 6]
+                
+        if platform.system() == "Windows":
+            self.texture_scale = self.texture_scale * 0.5
 
     def get_fastest(self):
         self.msaa = False
