@@ -6,7 +6,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(OpenGL_GL_PREFERENCE GLVND)
 
 if(WIN32)
-  set(USE_GLFW FALSE)
+  set(USE_GLFW TRUE)
   # iGibson on Windows is always in VR mode
   set(USE_VR TRUE)
   set(USE_EGL FALSE)
