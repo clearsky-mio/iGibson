@@ -88,3 +88,8 @@ igibson/render/mesh_renderer/libcryptopp.8.6.dylib
 coverage.xml
 
 venv
+
+changed_state.bullet
+changed_state.urdf
+changed_structure.bullet
+changed_structure.urdf
