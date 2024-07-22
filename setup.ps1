@@ -2,6 +2,12 @@ $currentPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $workspace = $currentPath
 Set-Location $workspace
 
+$dataPath = "E:\project\Robot\data"
+if (-not (Test-Path $dataPath)) {
+    Write-Output "Data path does not exist"
+    $dataPath = Read-Host "Enter the path to the data folder"
+}
+
 Write-Output "Current Path: $currentPath"
 
 try {
@@ -16,8 +22,6 @@ try {
     Write-Output "Git is not installed, please install Git"
     exit
 }
-
-
 
 try {
     $isGitRepo = & git rev-parse --is-inside-work-tree $currentPath 2>$null
@@ -65,7 +69,9 @@ if ($python38Path) {
     }
 }
 
-$pythonPath -m venv venv --system-site-packages
+& cmd /c "mklink /D igibson\data $dataPath"
+
+& $pythonPath -m venv venv --system-site-packages
 $venvPath = Join-Path $workspace "venv"
 . "$venvPath\Scripts\Activate.ps1"
 
