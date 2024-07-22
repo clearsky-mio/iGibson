@@ -65,7 +65,11 @@ if ($python38Path) {
     }
 }
 
-python -m venv venv --system-site-packages
+$pythonPath -m venv venv --system-site-packages
+$venvPath = Join-Path $workspace "venv"
+. "$venvPath\Scripts\Activate.ps1"
+
+pip install --user --upgrade pip  -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 try {
     & ./build.ps1

@@ -14,6 +14,5 @@ if (Test-Path $venvPath) {
 
 & ./clean.ps1
 
-pip install --user --upgrade pip  -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install -e .
 pip install -r requirements-dev.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
