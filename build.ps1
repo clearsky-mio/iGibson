@@ -7,8 +7,8 @@ if (Test-Path $venvPath) {
     # activate venv
     . "$venvPath\Scripts\Activate.ps1"
 } else {
-    Write-Output "venv does not exist at $venvPath"
-    Write-Output "Please run setup.ps1 to setup environment"
+    Write-Host "venv does not exist at $venvPath" -ForegroundColor Red
+    Write-Host "Please run setup.ps1 to setup environment" -ForegroundColor Red
     exit
 }
 

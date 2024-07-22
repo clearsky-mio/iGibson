@@ -4,22 +4,22 @@ Set-Location $workspace
 
 $dataPath = "E:\project\Robot\data"
 if (-not (Test-Path $dataPath)) {
-    Write-Output "Data path does not exist"
+    Write-Host "Data path does not exist" -ForegroundColor Yellow
     $dataPath = Read-Host "Enter the path to the data folder"
 }
 
-Write-Output "Current Path: $currentPath"
+Write-Host "Current Path: $currentPath" -ForegroundColor Green
 
 try {
     $gitVersion = & git --version 2>$null
     if ($gitVersion) {
-        Write-Output "$gitVersion is installed"
+        Write-Host "$gitVersion is installed" -ForegroundColor Green
     } else {
-        Write-Output "Git is not installed, please install Git"
+        Write-Host "Git is not installed, please install Git" -ForegroundColor Red
         exit
     }
 } catch {
-    Write-Output "Git is not installed, please install Git"
+    Write-Host "Git is not installed, please install Git" -ForegroundColor Red
     exit
 }
 
@@ -35,21 +35,20 @@ try {
 }
 
 if ($isGitRepo -eq $false) {
-    Write-Output "This is not a git repository"
-    Write-Output "Clone the repository using git clone"
-    & git clone -b windows-dev https://github.com/clearsky-mio/iGibson.git
+    Write-Host "This is not a git repository" -ForegroundColor Yellow
+    Write-Host "Clone the repository using git clone" -ForegroundColor Yellow
+    & git clone -b auto-setup https://github.com/clearsky-mio/iGibson.git
+    $workspace = "$currentPath\iGibson"
+    Set-Location $workspace
 }
-
-$workspace = "$currentPath\iGibson"
-Set-Location $workspace
 
 $requirementsExist = (Test-Path "$workspace\requirements-dev.txt")
 $igibsonExist = (Test-Path "$workspace\igibson")
 $testsExist = (Test-Path "$workspace\tests")
 
 if ($requirementsExist -eq $false) {
-    Write-Output "requirements-dev.txt does not exist"
-    Write-Output "Please Check if you have cloned the repository correctly"
+    Write-Host "requirements-dev.txt does not exist" -ForegroundColor Red
+    Write-Host "Please Check if you have cloned the repository correctly" -ForegroundColor Red
     exit
 }
 
@@ -58,13 +57,13 @@ if ($requirementsExist -eq $false) {
 $python38Path = & py -3.8 -c "import sys; print(sys.executable)" 2>$null
 if ($python38Path) {
     $pythonPath = $python38Path
-    Write-Output "use $python38Path"
+    Write-Host "use $python38Path" -ForegroundColor Green
 } else {
     $pythonPath = & py -3 -c "import sys; print(sys.executable)" 2>$null
     if ($pythonPath) {
-        Write-Output "Python 3.8 is not installed, use default python $pythonPath"
+        Write-Host "Python 3.8 is not installed, use default python $pythonPath" -ForegroundColor Yellow
     } else {
-        Write-Output "Python 3 is not installed, please install Python 3"
+        Write-Host "Python 3 is not installed, please install Python 3" -ForegroundColor Red
         exit
     }
 }
@@ -75,18 +74,18 @@ if ($python38Path) {
 $venvPath = Join-Path $workspace "venv"
 . "$venvPath\Scripts\Activate.ps1"
 
-pip install --user --upgrade pip  -i https://pypi.tuna.tsinghua.edu.cn/simple
+& $venvPath\Scripts\python -m pip install --upgrade pip  -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 try {
     & ./build.ps1
 } catch {
-    Write-Output "Error running build.ps1: $_"
+    Write-Host "Error running build.ps1: $_" -ForegroundColor Red
     exit
 }
 
 try {
     & ./test.ps1
 } catch {
-    Write-Output "Error running test.ps1: $_"
+    Write-Host "Error running test.ps1: $_" -ForegroundColor Red
     exit
 }
