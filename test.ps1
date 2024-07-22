@@ -12,8 +12,6 @@ if (Test-Path $venvPath) {
     exit
 }
 
-$env:HTTP_PROXY = ""
-$env:HTTPS_PROXY = ""
 pip install pytest~=6.2.3 pytest-cov>=3.0.0 -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 pytest --ignore benchmarks --cov=igibson --cov-report=html tests
