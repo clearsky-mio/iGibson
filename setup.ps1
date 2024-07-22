@@ -66,12 +66,17 @@ if ($python38Path) {
 }
 
 python -m venv venv --system-site-packages
-. "$workspace\venv\Scripts\Activate.ps1"
 
-$env:HTTP_PROXY = ""
-$env:HTTPS_PROXY = ""
-python -m pip install -r requirements-dev.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+try {
+    & ./build.ps1
+} catch {
+    Write-Output "Error running build.ps1: $_"
+    exit
+}
 
-& build.ps1
-
-& test.ps1
+try {
+    & ./test.ps1
+} catch {
+    Write-Output "Error running test.ps1: $_"
+    exit
+}

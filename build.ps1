@@ -17,3 +17,4 @@ if (Test-Path $venvPath) {
 $env:HTTP_PROXY = ""
 $env:HTTPS_PROXY = ""
 pip install -e .
+pip install -r requirements-dev.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
