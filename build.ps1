@@ -12,7 +12,7 @@ if (Test-Path $venvPath) {
     exit
 }
 
-& clean.ps1
+& ./clean.ps1
 
 $env:HTTP_PROXY = ""
 $env:HTTPS_PROXY = ""
