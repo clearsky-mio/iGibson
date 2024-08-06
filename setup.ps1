@@ -2,7 +2,7 @@ $currentPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $workspace = $currentPath
 Set-Location $workspace
 
-$dataPath = "E:\project\Robot\data"
+$dataPath = "D:\projects\Robot\data"
 if (-not (Test-Path $dataPath)) {
     Write-Host "Data path does not exist" -ForegroundColor Yellow
     $dataPath = Read-Host "Enter the path to the data folder"
@@ -82,6 +82,12 @@ try {
     Write-Host "Error running build.ps1: $_" -ForegroundColor Red
     exit
 }
+
+& $venvPath\Scripts\python -m pip install pip==21.1.1  -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+& $venvPath\Scripts\python -m pip install gym==0.21  -i https://pypi.tuna.tsinghua.edu.cn/simple
+& $venvPath\Scripts\python -m pip install stable-baselines3[extra]==0.15  -i https://pypi.tuna.tsinghua.edu.cn/simple
+& $venvPath\Scripts\python -m pip install pybullet  -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 try {
     & ./test.ps1
